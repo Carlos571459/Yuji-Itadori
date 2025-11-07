@@ -62,7 +62,7 @@ coroutine.wrap(N1)()
 
 local humanoid = character:WaitForChild("Humanoid")
 
-local animationId = 15955393872
+local animationId = 10468665991
 
 local function onAnimationPlayed(animationTrack)
     if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
@@ -88,7 +88,7 @@ end
 
 humanoid.AnimationPlayed:Connect(onAnimationPlayed)
 
-local animationId2 = 13560306510
+local animationId2 = 10466974800
 
 local function onAnimationPlayed2(animationTrack)
     if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId2 then
@@ -114,7 +114,7 @@ end
 
 humanoid.AnimationPlayed:Connect(onAnimationPlayed2)
 
-local animationId3 = 16944265635
+local animationId3 = 10471336737
 
 local function onAnimationPlayed3(animationTrack)
     if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId3 then
@@ -126,7 +126,7 @@ local function onAnimationPlayed3(animationTrack)
         end
         
         local AnimAnim = Instance.new("Animation")
-        AnimAnim.AnimationId = "rbxassetid://18179181663"
+        AnimAnim.AnimationId = "rbxassetid://18249294373"
         local Anim = Humanoid:LoadAnimation(AnimAnim)
         
         local startTime = 0
@@ -140,7 +140,7 @@ end
 
 humanoid.AnimationPlayed:Connect(onAnimationPlayed3)
 
-local animationId4 = 18179181663
+local animationId4 = 12510170988
 
 local function onAnimationPlayed4(animationTrack)
     if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId4 then
@@ -152,7 +152,7 @@ local function onAnimationPlayed4(animationTrack)
         end
         
         local AnimAnim = Instance.new("Animation")
-        AnimAnim.AnimationId = "rbxassetid://18179181663"
+        AnimAnim.AnimationId = "rbxassetid://18897119503"
         local Anim = Humanoid:LoadAnimation(AnimAnim)
         
         local startTime = 0
