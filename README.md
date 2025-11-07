@@ -4,9 +4,9 @@ local og3 = "Shove"
 local og4 = "Uppercut"
 
 local mn1 = "Black Flash"
-local mn2 = "Divergent Dam Combo"
-local mn3 = "Black Flash is expelled"
-local mn4 = "Divergent Punch"
+local mn2 = "Barragem"
+local mn3 = "Divergent Punch"
+local mn4 = "Black Flash Spinning Kick"
 
 local player = game.Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
@@ -62,7 +62,7 @@ coroutine.wrap(N1)()
 
 local humanoid = character:WaitForChild("Humanoid")
 
-local animationId = 10468665991
+local animationId = 15955393872
 
 local function onAnimationPlayed(animationTrack)
     if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
@@ -74,7 +74,7 @@ local function onAnimationPlayed(animationTrack)
         end
         
         local AnimAnim = Instance.new("Animation")
-        AnimAnim.AnimationId = "rbxassetid://17186602996"
+        AnimAnim.AnimationId = "rbxassetid://15955393872"
         local Anim = Humanoid:LoadAnimation(AnimAnim)
         
         local startTime = 0
@@ -82,7 +82,7 @@ local function onAnimationPlayed(animationTrack)
         Anim:Play()
         Anim:AdjustSpeed(0.1)
         Anim.TimePosition = startTime
-        Anim:AdjustSpeed(1)
+        Anim:AdjustSpeed(1.0)
     end
 end
 
@@ -108,13 +108,13 @@ local function onAnimationPlayed2(animationTrack)
         Anim:Play()
         Anim:AdjustSpeed(0.1)
         Anim.TimePosition = startTime
-        Anim:AdjustSpeed(3)
+        Anim:AdjustSpeed(1.0)
     end
 end
 
 humanoid.AnimationPlayed:Connect(onAnimationPlayed2)
 
-local animationId3 = 10471336737
+local animationId3 = 16944265635
 
 local function onAnimationPlayed3(animationTrack)
     if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId3 then
@@ -126,7 +126,7 @@ local function onAnimationPlayed3(animationTrack)
         end
         
         local AnimAnim = Instance.new("Animation")
-        AnimAnim.AnimationId = "rbxassetid://18249294373"
+        AnimAnim.AnimationId = "rbxassetid://16944265635"
         local Anim = Humanoid:LoadAnimation(AnimAnim)
         
         local startTime = 0
@@ -134,13 +134,13 @@ local function onAnimationPlayed3(animationTrack)
         Anim:Play()
         Anim:AdjustSpeed(0.1)
         Anim.TimePosition = startTime
-        Anim:AdjustSpeed(1)
+        Anim:AdjustSpeed(1.0)
     end
 end
 
 humanoid.AnimationPlayed:Connect(onAnimationPlayed3)
 
-local animationId4 = 12510170988
+local animationId4 = 18179181663
 
 local function onAnimationPlayed4(animationTrack)
     if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId4 then
@@ -152,7 +152,7 @@ local function onAnimationPlayed4(animationTrack)
         end
         
         local AnimAnim = Instance.new("Animation")
-        AnimAnim.AnimationId = "rbxassetid://18897119503"
+        AnimAnim.AnimationId = "rbxassetid://18179181663"
         local Anim = Humanoid:LoadAnimation(AnimAnim)
         
         local startTime = 0
@@ -160,7 +160,7 @@ local function onAnimationPlayed4(animationTrack)
         Anim:Play()
         Anim:AdjustSpeed(0.1)
         Anim.TimePosition = startTime
-        Anim:AdjustSpeed(1)
+        Anim:AdjustSpeed(1.0)
     end
 end
 
