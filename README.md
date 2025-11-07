@@ -1,167 +1,199 @@
-local og1 = "Normal Punch"
-local og2 = "Consecutive Punches"
-local og3 = "Shove"
-local og4 = "Uppercut"
-
-local mn1 = "Black Flash"
-local mn2 = "Barragem"
-local mn3 = "Divergent Punch"
-local mn4 = "Black Flash Spinning Kick"
-
-local player = game.Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
-local character = player.Character or player.CharacterAdded:Wait()
-
-local t1 = {
-    ["1"] = {original = og1, new = mn1},
-    ["2"] = {original = og2, new = mn2},
-    ["3"] = {original = og3, new = mn3},
-    ["4"] = {original = og4, new = mn4}
+local ATTACK_CONFIG = {
+	["Normal Punch"] = {
+		newName = "Black Flash",
+		animationId = 15955393872,
+		speed = 1,
+		timePos = 0
+	},
+	["Consecutive Punches"] = {
+		newName = "Barragem",
+		animationId = 13560306510,
+		speed = 1,
+		timePos = 0
+	},
+	["Shove"] = {
+		newName = "Divergent Punch",
+		animationId = 16944265635,
+		speed = 1,
+		timePos = 0
+	},
+	["Uppercut"] = {
+		newName = "Black Flash Spinning Kick",
+		animationId = 18179181663,
+		speed = 1,
+		timePos = 0
+	}
 }
 
-local function updateHunterText()
-    local screenGui = playerGui:FindFirstChild("ScreenGui")
-    if screenGui then
-        local magicHealth = screenGui:FindFirstChild("MagicHealth")
-        if magicHealth then
-            local textLabel = magicHealth:FindFirstChild("TextLabel")
-            if textLabel then
-                textLabel.Text = "Hunter"
-            end
-        end
-    end
-end
+local ANIMATION_REPLACEMENTS = {
+	[10468665991] = "Normal Punch",
+	[10466974800] = "Consecutive Punches",
+	[10471336737] = "Shove",
+	[12510170988] = "Uppercut"
+}
 
-local function N1()
-    while character.Humanoid.Health > 0 do
-        local hotbar = playerGui:FindFirstChild("Hotbar")
-        if hotbar then
-            local backpack = hotbar:FindFirstChild("Backpack")
-            if backpack then
-                local hotbarFrame = backpack:FindFirstChild("Hotbar")
-                if hotbarFrame then
-                    for buttonName, toolData in pairs(t1) do
-                        local baseButton = hotbarFrame:FindFirstChild(buttonName)
-                        baseButton = baseButton and baseButton:FindFirstChild("Base")
-                        if baseButton then
-                            local toolName = baseButton:FindFirstChild("ToolName")
-                            if toolName and toolName.Text == toolData.original then
-                                toolName.Text = toolData.new
-                            end
-                        end
-                    end
-                end
-            end
-        end
-        updateHunterText()
-        wait(0.1)
-    end
-end
+local fontConfig = {
+	Enabled = false,
+	Font = Enum.Font.Sarpanch,
+	Weight = Enum.FontWeight.Thin,
+	Style = Enum.FontStyle.Normal
+}
 
-coroutine.wrap(N1)()
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 
-local animationId = 15955393872
+local hotbarCache = {}
+local isAlive = true
 
-local function onAnimationPlayed(animationTrack)
-    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
-        local p = game.Players.LocalPlayer
-        local Humanoid = p.Character:WaitForChild("Humanoid")
-        
-        for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
-            animTrack:Stop()
-        end
-        
-        local AnimAnim = Instance.new("Animation")
-        AnimAnim.AnimationId = "rbxassetid://15955393872"
-        local Anim = Humanoid:LoadAnimation(AnimAnim)
-        
-        local startTime = 0
-        
-        Anim:Play()
-        Anim:AdjustSpeed(0.1)
-        Anim.TimePosition = startTime
-        Anim:AdjustSpeed(1.0)
-    end
+local t1 = {}
+
+for i, attackName in ipairs({"Normal Punch", "Consecutive Punches", "Shove", "Uppercut"}) do
+	local config = ATTACK_CONFIG[attackName]
+	if config then
+		t1[tostring(i)] = {original = attackName, new = config.newName}
+	end
 end
 
-humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+local function getHotbarPath()
+	if hotbarCache.hotbar and hotbarCache.hotbar.Parent then
+		return hotbarCache.hotbar, hotbarCache.backpack, hotbarCache.hotbarFrame
+	end
 
-local animationId2 = 10466974800
+	local hotbar = playerGui:FindFirstChild("Hotbar")
+	if not hotbar then return nil, nil, nil end
 
-local function onAnimationPlayed2(animationTrack)
-    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId2 then
-        local p = game.Players.LocalPlayer
-        local Humanoid = p.Character:WaitForChild("Humanoid")
-        
-        for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
-            animTrack:Stop()
-        end
-        
-        local AnimAnim = Instance.new("Animation")
-        AnimAnim.AnimationId = "rbxassetid://13560306510"
-        local Anim = Humanoid:LoadAnimation(AnimAnim)
-        
-        local startTime = 0
-        
-        Anim:Play()
-        Anim:AdjustSpeed(0.1)
-        Anim.TimePosition = startTime
-        Anim:AdjustSpeed(1.0)
-    end
+	local backpack = hotbar:FindFirstChild("Backpack")
+	if not backpack then return nil, nil, nil end
+
+	local hotbarFrame = backpack:FindFirstChild("Hotbar")
+	if not hotbarFrame then return nil, nil, nil end
+
+	hotbarCache.hotbar = hotbar
+	hotbarCache.backpack = backpack
+	hotbarCache.hotbarFrame = hotbarFrame
+
+	return hotbar, backpack, hotbarFrame
 end
 
-humanoid.AnimationPlayed:Connect(onAnimationPlayed2)
-
-local animationId3 = 16944265635
-
-local function onAnimationPlayed3(animationTrack)
-    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId3 then
-        local p = game.Players.LocalPlayer
-        local Humanoid = p.Character:WaitForChild("Humanoid")
-        
-        for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
-            animTrack:Stop()
-        end
-        
-        local AnimAnim = Instance.new("Animation")
-        AnimAnim.AnimationId = "rbxassetid://16944265635"
-        local Anim = Humanoid:LoadAnimation(AnimAnim)
-        
-        local startTime = 0
-        
-        Anim:Play()
-        Anim:AdjustSpeed(0.1)
-        Anim.TimePosition = startTime
-        Anim:AdjustSpeed(1.0)
-    end
+local function applyFont(label)
+	if fontConfig.Enabled and label:IsA("TextLabel") then
+		pcall(function()
+			label.FontFace = Font.new(label.FontFace.Family, fontConfig.Weight, fontConfig.Style)
+			label.Font = fontConfig.Font
+		end)
+	end
 end
 
-humanoid.AnimationPlayed:Connect(onAnimationPlayed3)
+local function updateHotbarNames(toolTable)
+	local _, _, hotbarFrame = getHotbarPath()
+	if not hotbarFrame then return end
 
-local animationId4 = 18179181663
-
-local function onAnimationPlayed4(animationTrack)
-    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId4 then
-        local p = game.Players.LocalPlayer
-        local Humanoid = p.Character:WaitForChild("Humanoid")
-        
-        for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
-            animTrack:Stop()
-        end
-        
-        local AnimAnim = Instance.new("Animation")
-        AnimAnim.AnimationId = "rbxassetid://18179181663"
-        local Anim = Humanoid:LoadAnimation(AnimAnim)
-        
-        local startTime = 0
-        
-        Anim:Play()
-        Anim:AdjustSpeed(0.1)
-        Anim.TimePosition = startTime
-        Anim:AdjustSpeed(1.0)
-    end
+	for buttonName, toolData in pairs(toolTable) do
+		local button = hotbarFrame:FindFirstChild(buttonName)
+		if button then
+			local baseButton = button:FindFirstChild("Base")
+			if baseButton then
+				local toolName = baseButton:FindFirstChild("ToolName")
+				if toolName and toolName.Text == toolData.original then
+					toolName.Text = toolData.new
+					applyFont(toolName)
+				end
+			end
+		end
+	end
 end
 
-humanoid.AnimationPlayed:Connect(onAnimationPlayed4)
+local function updateHunterText()
+	local screenGui = playerGui:FindFirstChild("ScreenGui")
+	if screenGui then
+		local magicHealth = screenGui:FindFirstChild("MagicHealth")
+		if magicHealth then
+			local textLabel = magicHealth:FindFirstChild("TextLabel")
+			if textLabel then
+				textLabel.Text = "Hunter"
+			end
+		end
+	end
+end
+
+local lastUpdate = 0
+local UPDATE_INTERVAL = 0.1
+
+RunService.Heartbeat:Connect(function()
+	if not isAlive then return end
+
+	local currentTime = tick()
+	if currentTime - lastUpdate >= UPDATE_INTERVAL then
+		lastUpdate = currentTime
+		updateHotbarNames(t1)
+		updateHunterText()
+	end
+end)
+
+local function bindReplacement(animationId, replacementId, speed, timePos)
+	humanoid.AnimationPlayed:Connect(function(animationTrack)
+		if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+			task.spawn(function()
+				task.wait()
+
+				for _, track in pairs(humanoid:GetPlayingAnimationTracks()) do
+					if track.Animation.AnimationId == "rbxassetid://" .. animationId then
+						track:Stop()
+					end
+				end
+
+				local AnimAnim = Instance.new("Animation")
+				AnimAnim.AnimationId = "rbxassetid://" .. replacementId
+				local Anim = humanoid:LoadAnimation(AnimAnim)
+				Anim:Play()
+				Anim:AdjustSpeed(0)
+				Anim.TimePosition = timePos or 0
+				Anim:AdjustSpeed(speed or 1)
+			end)
+		end
+	end)
+end
+
+for originalAnim, attackData in pairs(ANIMATION_REPLACEMENTS) do
+	if type(attackData) == "string" then
+		local config = ATTACK_CONFIG[attackData]
+		if config and config.animationId then
+			bindReplacement(
+				originalAnim,
+				config.animationId,
+				config.speed,
+				config.timePos
+			)
+		end
+	end
+end
+
+player.CharacterAdded:Connect(function(newCharacter)
+	character = newCharacter
+	humanoid = character:WaitForChild("Humanoid")
+	isAlive = true
+	hotbarCache = {}
+
+	for originalAnim, attackData in pairs(ANIMATION_REPLACEMENTS) do
+		if type(attackData) == "string" then
+			local config = ATTACK_CONFIG[attackData]
+			if config and config.animationId then
+				bindReplacement(
+					originalAnim,
+					config.animationId,
+					config.speed,
+					config.timePos
+				)
+			end
+		end
+	end
+end)
+
+humanoid.Died:Connect(function()
+	isAlive = false
+end)
