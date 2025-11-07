@@ -8,7 +8,7 @@ local ATTACK_CONFIG = {
 	["Consecutive Punches"] = {
 		newName = "Barragem",
 		animationId = 13560306510,
-		speed = 1,
+		speed = 3,
 		timePos = 0
 	},
 	["Shove"] = {
