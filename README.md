@@ -6,16 +6,16 @@ _G.v5 = _G.v4:FindFirstChild("Backpack")
 _G.v6 = _G.v5:FindFirstChild("Hotbar")
 _G.v7 = _G.v6:FindFirstChild("1").Base
 _G.v8 = _G.v7.ToolName
-_G.v8.Text = "Black Flash"
+_G.v8.Text = "Normal Punch"
 _G.v9 = _G.v6:FindFirstChild("2").Base
 _G.v10 = _G.v9.ToolName
-_G.v10.Text = "Barragem"
+_G.v10.Text = "Consecutive Punches"
 _G.v11 = _G.v6:FindFirstChild("3").Base
 _G.v12 = _G.v11.ToolName
-_G.v12.Text = "Divergent Punch"
+_G.v12.Text = "Shove"
 _G.v13 = _G.v6:FindFirstChild("4").Base
 _G.v14 = _G.v13.ToolName
-_G.v14.Text = "Black Flash Spinning Kick"
+_G.v14.Text = "Uppercut"
 _G.v15 = game:GetService("Players")
 _G.v16 = _G.v15.LocalPlayer
 _G.v17 = _G.v16:WaitForChild("PlayerGui")
@@ -45,7 +45,7 @@ _G.v26 = function(_G.v27)
             _G.v30:Stop()
         end
         _G.v31 = Instance.new("Animation")
-        _G.v31.AnimationId = "rbxassetid://15955393872"
+        _G.v31.AnimationId = "rbxassetid://17186602996"
         _G.v32 = _G.v29:LoadAnimation(_G.v31)
         _G.v32:Play()
         _G.v32:AdjustSpeed(1.0)
@@ -59,7 +59,7 @@ _G.v26 = function(_G.v27)
         _G.v36.AnimationId = "rbxassetid://13560306510"
         _G.v37 = _G.v34:LoadAnimation(_G.v36)
         _G.v37:Play()
-        _G.v37:AdjustSpeed(1.0)
+        _G.v37:AdjustSpeed(3.0)
     elseif _G.v27.Animation.AnimationId == "rbxassetid://16944265635" then
         _G.v33 = game.Players.LocalPlayer
         _G.v34 = _G.v33.Character:WaitForChild("Humanoid")
@@ -67,7 +67,7 @@ _G.v26 = function(_G.v27)
             _G.v35:Stop()
         end
         _G.v36 = Instance.new("Animation")
-        _G.v36.AnimationId = "rbxassetid://16944265635"
+        _G.v36.AnimationId = "rbxassetid://18179181663"
         _G.v37 = _G.v34:LoadAnimation(_G.v36)
         _G.v37:Play()
         _G.v37:AdjustSpeed(1.0)
